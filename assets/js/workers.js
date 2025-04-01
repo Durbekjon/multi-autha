@@ -92,7 +92,8 @@ async function addWorker(worker) {
     const request2 = store.getAll();
     request2.onsuccess = () => {
       const data = request2.result;
-      const qrCode = data.length > 0 ? data[data.length - 1].qrCode : 130250;
+      const qrCode =
+        data.length > 0 ? data[data.length - 1].qrCode + 1 : 130250;
       worker.qrCode = qrCode;
       console.log(worker);
       const request = store.add(worker);
