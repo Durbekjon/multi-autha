@@ -19,7 +19,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker
-            .register('/sw.js')
+            .register('./assets/js/sw.js')
             .then((registration) => {
               console.log('ServiceWorker registration successful');
             })
@@ -41,6 +41,7 @@
 
       <div class="row justify-content-center mb-4">
         <div class="col-lg-6">
+          <div class="loading-spinner" id="loadingSpinner"></div>
           <div class="search-box">
             <input
               type="text"
@@ -77,12 +78,6 @@
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-
-      <div class="loading-spinner" id="loadingSpinner">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
         </div>
       </div>
 
