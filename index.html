@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>    
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Authentication App">
+    <title>Authentication Methods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="./assets/packs/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./assets/style/styles.css" rel="stylesheet" />
+    <link href="./assets/packs/css/font.css" rel="stylesheet" />
+    <script src="./assets/packs/js/jsQR.js"></script>
+    <script src="./assets/packs/js/face-api.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful');
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
+  </head>
+  <body class="py-5">
+    <button class="theme-toggle" id="themeToggle">🌓</button>
+
+    <div class="container">
+      <h1 class="text-center mb-5 fw-bold fade-in">
+        Autentifikatsiya Usullari
+      </h1>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <a href="faceid.html" class="text-decoration-none">
+                <div
+                  class="card auth-card shadow-lg fade-in"
+                  style="animation-delay: 0.2s"
+                >
+                  <div class="card-body p-4 text-center">
+                    <div class="auth-icon">👤</div>
+                    <h2 class="card-title text">FaceID</h2>
+                    <p class="card-text text">Yuz orqali autentifikatsiya</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6 mb-4">
+              <a href="qrcode.html" class="text-decoration-none">
+                <div
+                  class="card auth-card shadow-lg fade-in"
+                  style="animation-delay: 0.4s"
+                >
+                  <div class="card-body p-4 text-center">
+                    <div class="auth-icon">📱</div>
+                    <h2 class="card-title text">QR Kod</h2>
+                    <p class="card-text text">QR kod orqali autentifikatsiya</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6 mb-4">
+              <a href="workers.html" class="text-decoration-none">
+                <div
+                  class="card auth-card shadow-lg fade-in"
+                  style="animation-delay: 0.2s"
+                >
+                  <div class="card-body p-4 text-center">
+                    <div class="auth-icon">👮‍♂️</div>
+                    <h2 class="card-title text">Xodimlar</h2>
+                    <p class="card-text text">Xodimlar ro'yxati</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6 mb-4">
+              <a href="documentation.html" class="text-decoration-none">
+                <div
+                  class="card auth-card shadow-lg fade-in"
+                  style="animation-delay: 0.2s"
+                >
+                  <div class="card-body p-4 text-center">
+                    <div class="auth-icon">📖</div>
+                    <h2 class="card-title text">Qo'llanma</h2>
+                    <p class="card-text text">Ilovani ishlatish bo'yicha yo'riqnoma</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="./assets/packs/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/index.js"></script>
+  </body>
+</html>

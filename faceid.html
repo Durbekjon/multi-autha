@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Authentication App" />
+    <title>FaceID Authentication</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="./assets/packs/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./assets/packs/css/font.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/style/faceid.css" />
+    <script src="./assets/packs/js/face-api.js"></script>
+    <link rel="manifest" href="/manifest.json" />
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {
+              console.log('ServiceWorker registration successful');
+            })
+            .catch((err) => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
+  </head>
+  <body class="py-5">
+    <button class="theme-toggle" id="themeToggle">🌓</button>
+
+    <div class="home-button">
+      <a href="index.html" class="btn btn-outline-primary">
+        <i class="fas fa-home"></i> O'rtaga qaytish
+      </a>
+    </div>
+
+    <div class="container card border-0">
+      <h1 class="text-center mb-5 fw-bold fade-in">FaceID Authentication</h1>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card auth-card shadow-lg fade-in">
+            <div class="card-body p-4">
+              <div id="faceContainer" style="display: block" class="mb-4">
+                <video id="faceVideo" autoplay muted playsinline></video>
+                <canvas id="faceCanvas"></canvas>
+              </div>
+              <div
+                id="workerCardContainer"
+                class="col"
+                style="display: none"
+              ></div>
+              <div class="text-center">
+                <div class="btn-group mb-3">
+                  <button id="refreshButton" class="btn btn-primary d-none">
+                    <i class="bi bi-arrow-clockwise"></i> Qayta tekshirish
+                  </button>
+                </div>
+                <div id="faceResult" class="alert" role="alert"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Worker Card Container -->
+
+    <script src="./assets/packs/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/faceid.js"></script>
+  </body>
+</html>

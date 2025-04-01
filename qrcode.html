@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Scanner</title>
+    <link href="./assets/packs/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="./assets/packs/js/html5-qrcode.min.js"></script>
+    <link rel="stylesheet" href="./assets/style/qr-code.css" />
+    <style>
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #333333;
+        --box-bg: #f8f9fa;
+        --result-bg: #f8f9fa;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+
+      .home-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+      }
+      .home-button .btn {
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+      }
+      .home-button .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="home-button">
+      <a href="index.html" class="btn btn-outline-primary">
+        <i class="fas fa-home"></i> O'rtaga qaytish
+      </a>
+    </div>
+
+    <div class="container">
+      <div class="qr-box">
+        <h3 class="mb-3">QR Kodni Skanerlash</h3>
+        <div class="row d-flex justify-content-center align-content-center">
+          <button
+            id="refreshButton"
+            class="btn btn-outline-primary mt-3 col-3"
+            style="display: none"
+          >
+            <i class="bi bi-arrow-clockwise"></i> Qayta tekshirish
+          </button>
+        </div>
+        <div id="qr-result" style="display: none"></div>
+        <div id="reader" style="width: 300px; height: 300px"></div>
+      </div>
+    </div>
+
+    <script src="./assets/packs/js/html5-qrcode.min.js"></script>
+    <script src="./assets/js/qr-code.js"></script>
+  </body>
+</html>
