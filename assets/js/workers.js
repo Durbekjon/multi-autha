@@ -1,10 +1,57 @@
 // Face API modellarini yuklash
 let modelsLoaded = false;
+let faceDetectionLoading = null;
+async function initializeFaceDetection() {
+  try {
+    const video = document.getElementById('faceVideo');
+    const canvas = document.getElementById('faceCanvas');
 
+    // Set up video
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+
+    // Set up canvas
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    // Start face detection
+    setInterval(async () => {
+      if (modelsLoaded) {
+        try {
+          const detections = await faceapi.detectAllFaces(video);
+          if (detections.length > 0) {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw face boxes
+            detections.forEach((detection) => {
+              const box = detection.box;
+              ctx.strokeStyle = '#00ff00';
+              ctx.lineWidth = 2;
+              ctx.strokeRect(box.x, box.y, box.width, box.height);
+            });
+          }
+        } catch (error) {
+          console.error('Error during face detection:', error);
+          // Don't show error to user, just log it
+        }
+      }
+    }, 100);
+  } catch (error) {
+    console.error('Error initializing face detection:', error);
+    alert(
+      'Kamera ruxsati berilmadi yoki yuzni aniqlovchi modellar yuklanmadi.'
+    );
+  }
+}
 async function loadModels() {
   try {
     document.getElementById('faceRegistrationModalText').textContent =
       'Modellar yuklanmoqda...';
+
+    // Show loading
+    document.getElementById('faceDetectionLoading').classList.remove('d-none');
+
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri(
         'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'
@@ -19,14 +66,22 @@ async function loadModels() {
         'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'
       ),
     ]);
+
+    // Hide loading
+    document.getElementById('faceDetectionLoading').classList.add('d-none');
+
     modelsLoaded = true;
     document.getElementById('faceRegistrationModalText').textContent =
       'Modellar yuklandi';
     console.log('Face API modellari yuklandi');
+
+    // Initialize face detection
+    await initializeFaceDetection();
   } catch (error) {
     console.error('Face API modellarini yuklashda xatolik:', error);
     document.getElementById('faceRegistrationModalText').textContent =
       'Modellar yuklanmadi';
+    document.getElementById('faceDetectionLoading').classList.add('d-none');
   }
 }
 
@@ -377,6 +432,12 @@ async function updateFaceData(workerId) {
                       <canvas id="faceCanvas" style="position: absolute; top: 0; left: 0;"></canvas>
                     </div>
                     <div id="faceResult" class="alert" role="alert"></div>
+                    <div id="faceDetectionLoading" class="text-center d-none">
+                      <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                      <p class="mt-2">Yuzni aniqlovchi modellarni yuklanmoqda...</p>
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
