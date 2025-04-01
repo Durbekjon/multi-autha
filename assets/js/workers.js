@@ -3,7 +3,11 @@ let modelsLoaded = false;
 
 async function loadModels() {
   try {
-    alert('loading models...');
+    document
+      .getElementById('faceRegistrationModal')
+      .innerHTML(
+        '<p id="faceRegistrationModalText">Modellar yuklanmoqda...</p>'
+      );
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri(
         'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'
@@ -19,10 +23,11 @@ async function loadModels() {
       ),
     ]);
     modelsLoaded = true;
+    document.getElementById('faceRegistrationModalText').textContent =
+      'Modellar yuklandi';
     console.log('Face API modellari yuklandi');
   } catch (error) {
     console.error('Face API modellarini yuklashda xatolik:', error);
-    setTimeout(loadModels, 2000);
   }
 }
 
