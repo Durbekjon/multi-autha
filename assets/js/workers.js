@@ -3,6 +3,7 @@ let modelsLoaded = false;
 
 async function loadModels() {
   try {
+    alert('loading models...');
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri(
         'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'
