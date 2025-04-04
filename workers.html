@@ -6,25 +6,25 @@
     <meta name="apple-mobile-web-app-title" content="Authentication App" />
     <title>Ishchilar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="./assets/packs/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="./assets/packs/css/font.css" rel="stylesheet" />
-    <link href="./assets/packs/css/bootstrap-icons.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/style/workers.css" />
-    <script src="./assets/packs/js/face-api.js"></script>
-    <script src="./assets/packs/js/qrcode.min.js"></script>
-    <script src="./assets/packs/js/qrcode1-4-4.min.js"></script>
+    <link href="assets/packs/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/packs/css/font.css" rel="stylesheet" />
+    <link href="assets/packs/css/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/style/workers.css" />
+    <script src="assets/packs/js/face-api.js"></script>
+    <script src="assets/packs/js/qrcode.min.js"></script>
+    <script src="assets/packs/js/qrcode1-4-4.min.js"></script>
 
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="manifest.json" />
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
           navigator.serviceWorker
-            .register('./assets/js/sw.js')
+            .register("assets/js/sw.js")
             .then((registration) => {
-              console.log('ServiceWorker registration successful');
+              console.log("ServiceWorker registration successful");
             })
             .catch((err) => {
-              console.log('ServiceWorker registration failed: ', err);
+              console.log("ServiceWorker registration failed: ", err);
             });
         });
       }
@@ -197,7 +197,7 @@
       </div>
     </div>
 
-    <script src="./assets/packs/js/bootstrap.bundle.min.js"></script>
-    <script src="./assets/js/workers.js"></script>
+    <script src="assets/packs/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/workers.js"></script>
   </body>
 </html>

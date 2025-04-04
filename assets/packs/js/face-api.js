@@ -1,8 +1,3 @@
-/*
-  Face-API
-  homepage: <https://github.com/vladmandic/face-api>
-  author: <https://github.com/vladmandic>'
-*/
 
 "use strict";
 var faceapi = (() => {
@@ -1894,7 +1889,7 @@ var faceapi = (() => {
               });
             var g = Object.assign({}, c),
               b = [],
-              y = "./this.program",
+              y = "this.program",
               x = (R, j) => {
                 throw j;
               },
@@ -3658,7 +3653,7 @@ var faceapi = (() => {
               });
             var u = Object.assign({}, s),
               p = [],
-              d = "./this.program",
+              d = "this.program",
               c = (Y, oe) => {
                 throw oe;
               },
@@ -13878,18 +13873,14 @@ Expected: ${s}.`);
         e = await this.extractIterations(e);
         let t = e.length / 2,
           n = !1;
-        (this.accumulatedGrads = e
-          .slice(0, t)
-          .map((a) => ({
+        (this.accumulatedGrads = e.slice(0, t).map((a) => ({
+          originalName: a.name,
+          variable: a.tensor.variable(n),
+        }))),
+          (this.accumulatedUpdates = e.slice(t, t * 2).map((a) => ({
             originalName: a.name,
             variable: a.tensor.variable(n),
-          }))),
-          (this.accumulatedUpdates = e
-            .slice(t, t * 2)
-            .map((a) => ({
-              originalName: a.name,
-              variable: a.tensor.variable(n),
-            })));
+          })));
       }
       getConfig() {
         return {
@@ -14047,18 +14038,14 @@ Expected: ${s}.`);
           });
         let t = e.length / 2,
           n = !1;
-        (this.accumulatedFirstMoment = e
-          .slice(0, t)
-          .map((a) => ({
+        (this.accumulatedFirstMoment = e.slice(0, t).map((a) => ({
+          originalName: a.name,
+          variable: a.tensor.variable(n),
+        }))),
+          (this.accumulatedSecondMoment = e.slice(t, t * 2).map((a) => ({
             originalName: a.name,
             variable: a.tensor.variable(n),
-          }))),
-          (this.accumulatedSecondMoment = e
-            .slice(t, t * 2)
-            .map((a) => ({
-              originalName: a.name,
-              variable: a.tensor.variable(n),
-            })));
+          })));
       }
       getConfig() {
         return {
@@ -14363,25 +14350,19 @@ Expected: ${s}.`);
         e = await this.extractIterations(e);
         let t = this.centered ? e.length / 3 : e.length / 2,
           n = !1;
-        (this.accumulatedMeanSquares = e
-          .slice(0, t)
-          .map((a) => ({
+        (this.accumulatedMeanSquares = e.slice(0, t).map((a) => ({
+          originalName: a.name,
+          variable: a.tensor.variable(n),
+        }))),
+          (this.accumulatedMoments = e.slice(t, t * 2).map((a) => ({
             originalName: a.name,
             variable: a.tensor.variable(n),
           }))),
-          (this.accumulatedMoments = e
-            .slice(t, t * 2)
-            .map((a) => ({
+          this.centered &&
+            (this.accumulatedMeanGrads = e.slice(t * 2, t * 3).map((a) => ({
               originalName: a.name,
               variable: a.tensor.variable(n),
-            }))),
-          this.centered &&
-            (this.accumulatedMeanGrads = e
-              .slice(t * 2, t * 3)
-              .map((a) => ({
-                originalName: a.name,
-                variable: a.tensor.variable(n),
-              })));
+            })));
       }
       getConfig() {
         return {
@@ -14468,7 +14449,7 @@ Expected: ${s}.`);
         );
       {
         let r = [
-            { paths: ["./" + this.weightDataFileName], weights: t.weightSpecs },
+            { paths: ["" + this.weightDataFileName], weights: t.weightSpecs },
           ],
           s = DN(t, r),
           i = window.URL.createObjectURL(
@@ -14785,7 +14766,7 @@ Manifest JSON has weights with names: ${o.join(", ")}.`);
           this.requestInit
         );
         t.body = new FormData();
-        let n = [{ paths: ["./model.weights.bin"], weights: e.weightSpecs }],
+        let n = [{ paths: ["model.weights.bin"], weights: e.weightSpecs }],
           a = DN(e, n);
         if (
           (t.body.append(

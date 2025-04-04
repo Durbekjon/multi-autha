@@ -1,51 +1,255 @@
-// Face API modellarini yuklash
+const tinyFaceDetectorModel = {
+  modelTopology: [
+    {
+      weights: [
+        {
+          name: "conv0/filters",
+          shape: [3, 3, 3, 16],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.009007044399485869,
+            min: -1.2069439495311063,
+          },
+        },
+        {
+          name: "conv0/bias",
+          shape: [16],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.005263455241334205,
+            min: -0.9211046672334858,
+          },
+        },
+        {
+          name: "conv1/depthwise_filter",
+          shape: [3, 3, 16, 1],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.004001977630690033,
+            min: -0.5042491814669441,
+          },
+        },
+        {
+          name: "conv1/pointwise_filter",
+          shape: [1, 1, 16, 32],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.013836609615999109,
+            min: -1.411334180831909,
+          },
+        },
+        {
+          name: "conv1/bias",
+          shape: [32],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.0015159862590771096,
+            min: -0.30926119685173037,
+          },
+        },
+        {
+          name: "conv2/depthwise_filter",
+          shape: [3, 3, 32, 1],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.002666276225856706,
+            min: -0.317286870876948,
+          },
+        },
+        {
+          name: "conv2/pointwise_filter",
+          shape: [1, 1, 32, 64],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.015265831292844286,
+            min: -1.6792414422128714,
+          },
+        },
+        {
+          name: "conv2/bias",
+          shape: [64],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.0020280554598453,
+            min: -0.37113414915168985,
+          },
+        },
+        {
+          name: "conv3/depthwise_filter",
+          shape: [3, 3, 64, 1],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.006100742489683862,
+            min: -0.8907084034938438,
+          },
+        },
+        {
+          name: "conv3/pointwise_filter",
+          shape: [1, 1, 64, 128],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.016276211832083907,
+            min: -2.0508026908425725,
+          },
+        },
+        {
+          name: "conv3/bias",
+          shape: [128],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.003394414279975143,
+            min: -0.7637432129944072,
+          },
+        },
+        {
+          name: "conv4/depthwise_filter",
+          shape: [3, 3, 128, 1],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.006716050119961009,
+            min: -0.8059260143953211,
+          },
+        },
+        {
+          name: "conv4/pointwise_filter",
+          shape: [1, 1, 128, 256],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.021875603993733724,
+            min: -2.8875797271728514,
+          },
+        },
+        {
+          name: "conv4/bias",
+          shape: [256],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.0041141652009066415,
+            min: -0.8187188749804216,
+          },
+        },
+        {
+          name: "conv5/depthwise_filter",
+          shape: [3, 3, 256, 1],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.008423839597141042,
+            min: -0.9013508368940915,
+          },
+        },
+        {
+          name: "conv5/pointwise_filter",
+          shape: [1, 1, 256, 512],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.030007277283014035,
+            min: -3.8709387695088107,
+          },
+        },
+        {
+          name: "conv5/bias",
+          shape: [512],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.008402082966823203,
+            min: -1.4871686851277068,
+          },
+        },
+        {
+          name: "conv8/filters",
+          shape: [1, 1, 512, 25],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.028336129469030042,
+            min: -4.675461362389957,
+          },
+        },
+        {
+          name: "conv8/bias",
+          shape: [25],
+          dtype: "float32",
+          quantization: {
+            dtype: "uint8",
+            scale: 0.002268134028303857,
+            min: -0.41053225912299807,
+          },
+        },
+      ],
+      paths: ["tiny_face_detector_model-shard1"],
+    },
+  ],
+  weightSpecs: [
+    // bu "weightsManifest"[0].weights
+  ],
+  weightData: new Uint8Array([
+    /* ... */
+  ]).buffer,
+};
+
 let modelsLoaded = false;
 
 async function loadModels() {
   try {
-    await Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri(
-        'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'
-      ),
-      faceapi.nets.faceLandmark68Net.loadFromUri(
-        'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'
-      ),
-      faceapi.nets.faceRecognitionNet.loadFromUri(
-        'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'
-      ),
-      faceapi.nets.ssdMobilenetv1.loadFromUri(
-        'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights'
-      ),
-    ]);
+    const modelPath = "assets/models/";
+    await faceapi.nets.tinyFaceDetector.load(
+      modelPath + "tiny_face_detector_model-weights_manifest.json"
+    );
+    await faceapi.nets.faceLandmark68Net.load(
+      modelPath + "face_landmark_68_model-weights_manifest.json"
+    );
+    await faceapi.nets.faceRecognitionNet.load(
+      modelPath + "face_recognition_model-weights_manifest.json"
+    );
+    await faceapi.nets.ssdMobilenetv1.load(
+      modelPath + "ssd_mobilenetv1_model-weights_manifest.json"
+    );
     modelsLoaded = true;
-    console.log('Face API modellari yuklandi');
+    console.log("Face API modellari yuklandi");
   } catch (error) {
-    console.error('Face API modellarini yuklashda xatolik:', error);
+    console.error("Face API modellarini yuklashda xatolik:", error);
     setTimeout(loadModels, 2000);
   }
 }
 
 // Sahifa yuklanganda modellarni yuklash
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   loadModels();
 });
 // IndexedDB setup
 let db;
-const DB_NAME = 'FaceAuthDB';
-const STORE_NAME = 'workers';
+const DB_NAME = "FaceAuthDB";
+const STORE_NAME = "workers";
 const DB_VERSION = 3; // Versiyani oshiramiz
 
 const dbPromise = new Promise((resolve, reject) => {
   const request = indexedDB.open(DB_NAME, DB_VERSION);
 
   request.onerror = (event) => {
-    console.error('Database error:', event.target.error);
+    console.error("Database error:", event.target.error);
     reject(event.target.error);
   };
 
   request.onupgradeneeded = (event) => {
     db = event.target.result;
-    console.log('Database upgrade needed');
+    console.log("Database upgrade needed");
 
     // Eski store ni o'chirib, yangisini yaratamiz
     if (db.objectStoreNames.contains(STORE_NAME)) {
@@ -53,15 +257,15 @@ const dbPromise = new Promise((resolve, reject) => {
     }
 
     const store = db.createObjectStore(STORE_NAME, {
-      keyPath: 'id',
+      keyPath: "id",
       autoIncrement: true,
     });
 
-    store.createIndex('name', 'name', { unique: false });
-    store.createIndex('position', 'position', { unique: false });
-    store.createIndex('militaryRank', 'militaryRank', { unique: false });
-    store.createIndex('qkType', 'qkType', { unique: false });
-    store.createIndex('qrCode', 'qrCode', { unique: true });
+    store.createIndex("name", "name", { unique: false });
+    store.createIndex("position", "position", { unique: false });
+    store.createIndex("militaryRank", "militaryRank", { unique: false });
+    store.createIndex("qkType", "qkType", { unique: false });
+    store.createIndex("qrCode", "qrCode", { unique: true });
   };
 
   request.onsuccess = (event) => {
@@ -73,7 +277,7 @@ const dbPromise = new Promise((resolve, reject) => {
 async function getAllWorkers() {
   const db = await dbPromise;
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([STORE_NAME], 'readonly');
+    const transaction = db.transaction([STORE_NAME], "readonly");
     const store = transaction.objectStore(STORE_NAME);
     const request = store.getAll();
 
@@ -85,7 +289,7 @@ async function getAllWorkers() {
 async function addWorker(worker) {
   const db = await dbPromise;
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([STORE_NAME], 'readwrite');
+    const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
     const request2 = store.getAll();
     request2.onsuccess = () => {
@@ -106,7 +310,7 @@ async function addWorker(worker) {
 async function updateWorker(worker) {
   const db = await dbPromise;
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([STORE_NAME], 'readwrite');
+    const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
     const request = store.put(worker);
 
@@ -118,7 +322,7 @@ async function updateWorker(worker) {
 async function deleteWorkerById(workerId) {
   const db = await dbPromise;
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([STORE_NAME], 'readwrite');
+    const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
     const request = store.delete(workerId);
 
@@ -128,12 +332,12 @@ async function deleteWorkerById(workerId) {
 }
 
 // UI Elements
-const searchInput = document.getElementById('searchInput');
-const loadingSpinner = document.getElementById('loadingSpinner');
-const paginationContainer = document.getElementById('paginationContainer');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const paginationInfo = document.getElementById('paginationInfo');
+const searchInput = document.getElementById("searchInput");
+const loadingSpinner = document.getElementById("loadingSpinner");
+const paginationContainer = document.getElementById("paginationContainer");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const paginationInfo = document.getElementById("paginationInfo");
 
 // Pagination state
 const ITEMS_PER_PAGE = 12;
@@ -186,7 +390,7 @@ function updatePaginationInfo() {
 }
 
 async function renderWorkers(workersToRender = workers) {
-  loadingSpinner.classList.add('active');
+  loadingSpinner.classList.add("active");
 
   try {
     if (!workersToRender.length) {
@@ -205,45 +409,45 @@ async function renderWorkers(workersToRender = workers) {
     const end = start + ITEMS_PER_PAGE;
     const pageWorkers = filteredWorkers.slice(start, end);
 
-    const container = document.getElementById('workersTableBody');
+    const container = document.getElementById("workersTableBody");
     container.innerHTML = pageWorkers.length
-      ? pageWorkers.map((worker) => createWorkerCard(worker)).join('')
+      ? pageWorkers.map((worker) => createWorkerCard(worker)).join("")
       : '<tr><td colspan="6" class="text-center"><h3>Ishchilar topilmadi</h3></td></tr>';
 
     updatePaginationInfo();
   } catch (error) {
-    console.error('Error rendering workers:', error);
-    const container = document.getElementById('workersTableBody');
+    console.error("Error rendering workers:", error);
+    const container = document.getElementById("workersTableBody");
     container.innerHTML =
       '<tr><td colspan="6" class="text-center"><h3>Ma\'lumotlarni yuklashda xatolik yuz berdi</h3></td></tr>';
   } finally {
-    loadingSpinner.classList.remove('active');
+    loadingSpinner.classList.remove("active");
   }
 }
 
 // Pagination event listeners
-prevBtn.addEventListener('click', () => {
+prevBtn.addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
     renderWorkers(filteredWorkers);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
 
-nextBtn.addEventListener('click', () => {
+nextBtn.addEventListener("click", () => {
   const totalPages = Math.ceil(filteredWorkers.length / ITEMS_PER_PAGE);
   if (currentPage < totalPages) {
     currentPage++;
     renderWorkers(filteredWorkers);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
 
 // Search with debounce
 let searchTimeout;
-searchInput.addEventListener('input', (e) => {
+searchInput.addEventListener("input", (e) => {
   clearTimeout(searchTimeout);
-  loadingSpinner.classList.add('active');
+  loadingSpinner.classList.add("active");
 
   searchTimeout = setTimeout(async () => {
     const searchTerm = e.target.value.toLowerCase();
@@ -265,7 +469,7 @@ searchInput.addEventListener('input', (e) => {
 async function viewQRCode(workerId) {
   try {
     const worker = await new Promise((resolve, reject) => {
-      const transaction = db.transaction([STORE_NAME], 'readonly');
+      const transaction = db.transaction([STORE_NAME], "readonly");
       const store = transaction.objectStore(STORE_NAME);
       const request = store.get(workerId);
       request.onsuccess = () => resolve(request.result);
@@ -273,7 +477,7 @@ async function viewQRCode(workerId) {
     });
 
     if (!worker || !worker.qrCode) {
-      alert('Ishchi yoki QR kodi topilmadi');
+      alert("Ishchi yoki QR kodi topilmadi");
       return;
     }
 
@@ -298,15 +502,15 @@ async function viewQRCode(workerId) {
           `;
 
     // Modal oynani qo'shish
-    const modalContainer = document.createElement('div');
+    const modalContainer = document.createElement("div");
     modalContainer.innerHTML = modalHtml;
     document.body.appendChild(modalContainer.firstElementChild);
 
-    const modal = new bootstrap.Modal(document.getElementById('qrCodeModal'));
-    const qrcodeElement = document.getElementById('qrcode');
+    const modal = new bootstrap.Modal(document.getElementById("qrCodeModal"));
+    const qrcodeElement = document.getElementById("qrcode");
 
     // QR kodni yaratish
-    const qr = qrcode(0, 'M');
+    const qr = qrcode(0, "M");
     qr.addData(worker.qrCode.toString()); // Faqat QR kod raqamini qo'shish
     qr.make();
     qrcodeElement.innerHTML = qr.createImgTag(5);
@@ -315,23 +519,23 @@ async function viewQRCode(workerId) {
 
     // Modal yopilganda QR kod elementini tozalash
     document
-      .getElementById('qrCodeModal')
-      .addEventListener('hidden.bs.modal', () => {
-        qrcodeElement.innerHTML = '';
-        document.getElementById('qrCodeModal').remove();
+      .getElementById("qrCodeModal")
+      .addEventListener("hidden.bs.modal", () => {
+        qrcodeElement.innerHTML = "";
+        document.getElementById("qrCodeModal").remove();
       });
   } catch (error) {
-    console.error('QR kod yaratishda xatolik:', error);
-    alert('QR kod yaratishda xatolik yuz berdi');
+    console.error("QR kod yaratishda xatolik:", error);
+    alert("QR kod yaratishda xatolik yuz berdi");
   }
 }
 
 // QR kodni yuklab olish
 function downloadQRCode() {
-  const qrImage = document.querySelector('#qrcode img');
+  const qrImage = document.querySelector("#qrcode img");
   if (qrImage) {
-    const link = document.createElement('a');
-    link.download = 'qrcode.png';
+    const link = document.createElement("a");
+    link.download = "qrcode.png";
     link.href = qrImage.src;
     link.click();
   }
@@ -344,7 +548,7 @@ async function updateFaceData(workerId) {
       video: {
         width: { ideal: 640 },
         height: { ideal: 480 },
-        facingMode: 'user',
+        facingMode: "user",
       },
     });
 
@@ -374,17 +578,17 @@ async function updateFaceData(workerId) {
           `;
 
     // Modal oynani qo'shish
-    const modalContainer = document.createElement('div');
+    const modalContainer = document.createElement("div");
     modalContainer.innerHTML = modalHtml;
     document.body.appendChild(modalContainer.firstElementChild);
 
     const modal = new bootstrap.Modal(
-      document.getElementById('faceRegistrationModal')
+      document.getElementById("faceRegistrationModal")
     );
-    const faceVideo = document.getElementById('faceVideo');
-    const faceCanvas = document.getElementById('faceCanvas');
-    const faceResult = document.getElementById('faceResult');
-    const registerFaceButton = document.getElementById('registerFaceButton');
+    const faceVideo = document.getElementById("faceVideo");
+    const faceCanvas = document.getElementById("faceCanvas");
+    const faceResult = document.getElementById("faceResult");
+    const registerFaceButton = document.getElementById("registerFaceButton");
 
     // Videoni modal oynaga qo'shish
     faceVideo.srcObject = stream;
@@ -396,7 +600,7 @@ async function updateFaceData(workerId) {
     };
 
     // Yuz ro'yxatdan o'tkazish
-    registerFaceButton.addEventListener('click', async () => {
+    registerFaceButton.addEventListener("click", async () => {
       try {
         const detection = await faceapi
           .detectSingleFace(faceVideo)
@@ -407,7 +611,7 @@ async function updateFaceData(workerId) {
           const descriptor = Array.from(detection.descriptor);
 
           // Yuz ma'lumotlarini IndexedDB ga saqlash
-          const transaction = db.transaction([STORE_NAME], 'readwrite');
+          const transaction = db.transaction([STORE_NAME], "readwrite");
           const store = transaction.objectStore(STORE_NAME);
           const worker = await new Promise((resolve, reject) => {
             const request = store.get(workerId);
@@ -453,29 +657,29 @@ async function updateFaceData(workerId) {
 
     // Modal yopilganda kamerani to'xtatish
     document
-      .getElementById('faceRegistrationModal')
-      .addEventListener('hidden.bs.modal', () => {
+      .getElementById("faceRegistrationModal")
+      .addEventListener("hidden.bs.modal", () => {
         stream.getTracks().forEach((track) => track.stop());
       });
 
     modal.show();
   } catch (error) {
-    console.error('Kamerani ishga tushirishda xatolik:', error);
-    alert('Kamerani ishga tushirishda xatolik yuz berdi');
+    console.error("Kamerani ishga tushirishda xatolik:", error);
+    alert("Kamerani ishga tushirishda xatolik yuz berdi");
   }
 }
 
 // Result message funksiyasi
 function updateResultMessage(element, text, isSuccess) {
   element.textContent = text;
-  element.classList.remove('d-none', 'alert-success', 'alert-danger');
-  element.classList.add(isSuccess ? 'alert-success' : 'alert-danger');
+  element.classList.remove("d-none", "alert-success", "alert-danger");
+  element.classList.add(isSuccess ? "alert-success" : "alert-danger");
 }
 
 async function editWorker(workerId) {
   try {
     const worker = await new Promise((resolve, reject) => {
-      const transaction = db.transaction([STORE_NAME], 'readonly');
+      const transaction = db.transaction([STORE_NAME], "readonly");
       const store = transaction.objectStore(STORE_NAME);
       const request = store.get(workerId);
       request.onsuccess = () => resolve(request.result);
@@ -483,7 +687,7 @@ async function editWorker(workerId) {
     });
 
     if (!worker) {
-      alert('Ishchi topilmadi');
+      alert("Ishchi topilmadi");
       return;
     }
 
@@ -545,23 +749,23 @@ async function editWorker(workerId) {
           `;
 
     // Modal oynani qo'shish
-    const modalContainer = document.createElement('div');
+    const modalContainer = document.createElement("div");
     modalContainer.innerHTML = modalHtml;
     document.body.appendChild(modalContainer.firstElementChild);
 
     const modal = new bootstrap.Modal(
-      document.getElementById('editWorkerModal')
+      document.getElementById("editWorkerModal")
     );
 
     // Rasmni yangilash
     document
-      .getElementById('editWorkerImage')
-      .addEventListener('change', function (e) {
+      .getElementById("editWorkerImage")
+      .addEventListener("change", function (e) {
         const file = e.target.files[0];
         if (file) {
           const reader = new FileReader();
           reader.onload = function (e) {
-            const preview = document.getElementById('editImagePreview');
+            const preview = document.getElementById("editImagePreview");
             preview.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" style="max-height: 200px;">`;
           };
           reader.readAsDataURL(file);
@@ -572,26 +776,26 @@ async function editWorker(workerId) {
 
     // Modal yopilganda formani tozalash
     document
-      .getElementById('editWorkerModal')
-      .addEventListener('hidden.bs.modal', () => {
-        document.getElementById('editWorkerModal').remove();
+      .getElementById("editWorkerModal")
+      .addEventListener("hidden.bs.modal", () => {
+        document.getElementById("editWorkerModal").remove();
       });
   } catch (error) {
-    console.error('Ishchini tahrirlashda xatolik:', error);
-    alert('Ishchini tahrirlashda xatolik yuz berdi');
+    console.error("Ishchini tahrirlashda xatolik:", error);
+    alert("Ishchini tahrirlashda xatolik yuz berdi");
   }
 }
 
 async function saveEditWorker(workerId) {
-  const form = document.getElementById('editWorkerForm');
+  const form = document.getElementById("editWorkerForm");
   if (!form.checkValidity()) {
     form.reportValidity();
     return;
   }
 
   try {
-    const imageFile = document.getElementById('editWorkerImage').files[0];
-    let imageBase64 = document.querySelector('#editImagePreview img').src;
+    const imageFile = document.getElementById("editWorkerImage").files[0];
+    let imageBase64 = document.querySelector("#editImagePreview img").src;
 
     if (imageFile) {
       imageBase64 = await new Promise((resolve) => {
@@ -602,7 +806,7 @@ async function saveEditWorker(workerId) {
     }
 
     const db = await dbPromise;
-    const transaction = db.transaction([STORE_NAME], 'readonly');
+    const transaction = db.transaction([STORE_NAME], "readonly");
     const store = transaction.objectStore(STORE_NAME);
     const request = store.get(workerId);
 
@@ -612,10 +816,10 @@ async function saveEditWorker(workerId) {
     });
     const updatedWorker = {
       id: workerId,
-      name: document.getElementById('editWorkerName').value,
-      position: document.getElementById('editWorkerPosition').value,
-      militaryRank: document.getElementById('editWorkerMilitaryRank').value,
-      qkType: document.getElementById('editWorkerQKType').value,
+      name: document.getElementById("editWorkerName").value,
+      position: document.getElementById("editWorkerPosition").value,
+      militaryRank: document.getElementById("editWorkerMilitaryRank").value,
+      qkType: document.getElementById("editWorkerQKType").value,
       image: imageBase64,
       faceDescriptor: worker.faceDescriptor,
       qrCode: worker.qrCode,
@@ -625,11 +829,11 @@ async function saveEditWorker(workerId) {
     workers = await getAllWorkers();
     renderWorkers();
     bootstrap.Modal.getInstance(
-      document.getElementById('editWorkerModal')
+      document.getElementById("editWorkerModal")
     ).hide();
   } catch (error) {
-    console.error('Ishchini saqlashda xatolik:', error);
-    alert('Ishchini saqlashda xatolik yuz berdi');
+    console.error("Ishchini saqlashda xatolik:", error);
+    alert("Ishchini saqlashda xatolik yuz berdi");
   }
 }
 
@@ -641,7 +845,7 @@ async function deleteWorker(workerId) {
       renderWorkers();
     }
   } catch (error) {
-    console.error('Error deleting worker:', error);
+    console.error("Error deleting worker:", error);
     alert("Ishchini o'chirishda xatolik yuz berdi");
   }
 }
@@ -652,21 +856,21 @@ let addWorkerModal;
 function showAddWorkerModal() {
   if (!addWorkerModal) {
     addWorkerModal = new bootstrap.Modal(
-      document.getElementById('addWorkerModal')
+      document.getElementById("addWorkerModal")
     );
   }
-  document.getElementById('addWorkerForm').reset();
-  document.getElementById('imagePreview').innerHTML = '';
+  document.getElementById("addWorkerForm").reset();
+  document.getElementById("imagePreview").innerHTML = "";
   addWorkerModal.show();
 }
 
 // Image preview
-document.getElementById('workerImage').addEventListener('change', function (e) {
+document.getElementById("workerImage").addEventListener("change", function (e) {
   const file = e.target.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      const preview = document.getElementById('imagePreview');
+      const preview = document.getElementById("imagePreview");
       preview.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" style="max-height: 200px;">`;
     };
     reader.readAsDataURL(file);
@@ -674,15 +878,15 @@ document.getElementById('workerImage').addEventListener('change', function (e) {
 });
 
 async function saveNewWorker() {
-  const form = document.getElementById('addWorkerForm');
+  const form = document.getElementById("addWorkerForm");
   if (!form.checkValidity()) {
     form.reportValidity();
     return;
   }
 
-  const imageFile = document.getElementById('workerImage').files[0];
+  const imageFile = document.getElementById("workerImage").files[0];
   if (!imageFile) {
-    alert('Iltimos, rasmni tanlang');
+    alert("Iltimos, rasmni tanlang");
     return;
   }
 
@@ -695,10 +899,10 @@ async function saveNewWorker() {
     });
 
     const newWorker = {
-      name: document.getElementById('workerName').value,
-      position: document.getElementById('workerPosition').value,
-      militaryRank: document.getElementById('workerMilitaryRank').value,
-      qkType: document.getElementById('workerQKType').value,
+      name: document.getElementById("workerName").value,
+      position: document.getElementById("workerPosition").value,
+      militaryRank: document.getElementById("workerMilitaryRank").value,
+      qkType: document.getElementById("workerQKType").value,
       image: imageBase64,
     };
 
@@ -707,7 +911,7 @@ async function saveNewWorker() {
     renderWorkers();
     addWorkerModal.hide();
   } catch (error) {
-    console.error('Error saving worker:', error);
+    console.error("Error saving worker:", error);
     alert("Ishchi qo'shishda xatolik yuz berdi");
   }
 }
